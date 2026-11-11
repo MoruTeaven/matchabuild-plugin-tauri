@@ -1,0 +1,29 @@
+{
+  "name": "@moruteaven/matchabuild-plugin-tauri",
+  "version": "0.1.0-dev.1",
+  "description": "matchabuild 的 Tauri 插件：前端资源 + 桌面安装包",
+  "author": "MoruTeaven <me@MoruTeaven.com>",
+  "license": "MIT",
+  "keywords": [
+    "matchabuild",
+    "plugin",
+    "tauri",
+    "desktop"
+  ],
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "default": "./src/index.mjs"
+    }
+  },
+  "files": [
+    "src"
+  ],
+  "peerDependencies": {
+    "@moruteaven/matchabuild": "^0.1.0-dev.1"
+  },
+  "devDependencies": {
+    "@moruteaven/matchabuild": "workspace:*"
+  }
+}
