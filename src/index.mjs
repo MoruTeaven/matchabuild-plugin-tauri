@@ -1,12 +1,9 @@
-import { execFile } from 'node:child_process';
 import { existsSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import path from 'node:path';
-import { promisify } from 'node:util';
+import { execa } from 'execa';
 import { defineRunnerPlugin, getRunner } from '@moruteaven/matchabuild';
 import { ensureDir, log } from '@moruteaven/matchabuild/utils';
-
-const run = promisify(execFile);
 
 function resolveTauriCli(clientDir) {
   const require = createRequire(path.join(clientDir, 'package.json'));
@@ -50,7 +47,7 @@ export default defineRunnerPlugin({
 
     log.step('tauri build（Rust 编译较慢）');
     try {
-      await run(process.execPath, [cli, ...args], {
+      await execa(process.execPath, [cli, ...args], {
         cwd: target.dirAbs,
         env: { ...process.env },
         maxBuffer: 64 * 1024 * 1024,
@@ -75,6 +72,6 @@ export default defineRunnerPlugin({
   async dev(target) {
     const cli = resolveTauriCli(target.dirAbs);
     if (!cli) throw new Error('找不到 @tauri-apps/cli（tauri 依赖未安装）');
-    await run(process.execPath, [cli, 'dev'], { cwd: target.dirAbs, env: { ...process.env } });
+    await execa(process.execPath, [cli, 'dev'], { cwd: target.dirAbs, env: { ...process.env } });
   },
 });
